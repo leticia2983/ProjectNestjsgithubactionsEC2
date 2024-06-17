@@ -2,7 +2,7 @@
 cd /home/ubuntu/
 mkdir "nestjs-hello-world"
 cd /home/ubuntu/nestjs-hello-world
-
+git clone "https://github.com/nestjs/typescript-starter.git"
 git pull origin main
 
 npm install

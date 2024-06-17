@@ -1,5 +1,6 @@
 #!/bin/bash
-
+cd /home/ubuntu/
+mkdir "nestjs-hello-world"
 cd /home/ubuntu/nestjs-hello-world
 
 git pull origin main

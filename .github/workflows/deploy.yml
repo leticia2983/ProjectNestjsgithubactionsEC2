@@ -25,6 +25,10 @@ jobs:
       - name: update packages
         run: npm audit
 
+      - name: install jest
+        run: npm install --save-dev ts-jest
+
+
       - name: Run tests
         run: npm run test
 

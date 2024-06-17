@@ -24,6 +24,7 @@ jobs:
 
       - name: update packages
         run: npm audit
+        run: npm install --save-dev @babel/preset-typescript
       - name: Run tests
         run: npm run test
 

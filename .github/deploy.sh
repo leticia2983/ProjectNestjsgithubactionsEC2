@@ -1,4 +1,5 @@
 #!/bin/bash
+mkdir /home/ubuntu/nestjs-hello-world
 
 cd /home/ubuntu/nestjs-hello-world
 

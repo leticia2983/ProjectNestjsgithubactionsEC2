@@ -28,6 +28,8 @@ jobs:
       - name: install jest
         run: npm install --save-dev ts-jest
 
+      - name: build
+        run: npm run build
 
       - name: Run tests
         run: npm run test

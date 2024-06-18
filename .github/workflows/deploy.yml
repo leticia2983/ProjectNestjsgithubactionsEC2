@@ -36,12 +36,15 @@ jobs:
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           EC2_USER: ${{ secrets.EC2_USER }}
-          EC2_KEY: ${{ secrets.EC2_KEY }}
+          KEY_PATH: ${{ secrets.KEY_PATH }}
         run: |
           sudo apt-get update -y
           sudo apt-get install -y sshpass
-          sshpass -p "${{ secrets.EC2_PASSWORD }}" scp -o StrictHostKeyChecking=no -r ./dist ${EC2_USER}@${EC2_HOST}:/home/ubuntu/hello-world
-
+          echo "${{ secrets.KEY_PATH }}" > ec2_key.pem
+          chmod 600 ec2_key.pem
+          scp -i ec2_key.pem -o StrictHostKeyChecking=no -r ./dist ${EC2_USER}@${EC2_HOST}:/home/ubuntu/hello-world
+      
+      
 
       - name: SSH and Deploy to EC2
         env:
@@ -50,7 +53,7 @@ jobs:
           KEY_PATH: ${{ secrets.KEY_PATH }}
 
         run: |
-          sshpass -p "${{ secrets.EC2_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
+          ssh -i ec2_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
             cd /home/ubuntu/hello-world
             npm install
             pm2 stop all

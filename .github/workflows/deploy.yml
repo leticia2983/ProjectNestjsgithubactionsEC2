@@ -32,17 +32,17 @@ jobs:
       - name: build
         run: npm run build
 
-      - name: Copy files via SCP
-        env:
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-          EC2_USER: ${{ secrets.EC2_USER }}
-          KEY_PATH: ${{ secrets.KEY_PATH }}
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y sshpass
-          echo "${{ secrets.KEY_PATH }}" > ec2_key.pem
-          chmod 600 ec2_key.pem
-          scp -i ec2_key.pem -o StrictHostKeyChecking=no -r ./dist ${EC2_USER}@${EC2_HOST}:/home/ubuntu/hello-world
+#      - name: Copy files via SCP
+#        env:
+#          EC2_HOST: ${{ secrets.EC2_HOST }}
+#          EC2_USER: ${{ secrets.EC2_USER }}
+#          KEY_PATH: ${{ secrets.KEY_PATH }}
+#        run: |
+#          sudo apt-get update -y
+#          sudo apt-get install -y sshpass
+#          echo "${{ secrets.KEY_PATH }}" > ec2_key.pem
+#          chmod 600 ec2_key.pem
+#          scp -i ec2_key.pem -o StrictHostKeyChecking=no -r ./dist ${EC2_USER}@${EC2_HOST}:/home/ubuntu/hello-world
       
       
 
@@ -56,6 +56,5 @@ jobs:
           ssh -i ec2_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
             cd /home/ubuntu/hello-world
             npm install
-            pm2 stop all
-            pm2 start dist/main.js
+            pm2 restart dist/main.js
           EOF
